@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# askstack 0.1.0
+# askstack 0.1.1
 # author: Pedro Buteri Gonring
 # email: pedro@bigode.net
 # date: 20171221
@@ -15,7 +15,7 @@ import requests
 from lxml import html
 
 
-version = '0.1.0'
+version = '0.1.1'
 
 
 # Parse and validate arguments
