@@ -54,7 +54,7 @@ Usage
 
 ::
 
-    Usage: askstack.py keywords... [options]
+    Usage: askstack keywords... [options]
 
     search answers on stackoverflow
 
