@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-# askstack 0.1.1
+# askstack 0.1.2
 # author: Pedro Buteri Gonring
 # email: pedro@bigode.net
-# date: 20171221
+# date: 20171223
 
 import sys
 import random
@@ -15,7 +15,7 @@ import requests
 from lxml import html
 
 
-version = '0.1.1'
+version = '0.1.2'
 
 
 # Parse and validate arguments
@@ -318,16 +318,16 @@ def cli():
         keywords += arg + ' '
     user_agent = get_random_user_agent()
 
-    urls = get_search_urls(
-        keywords, user_agent, options.timeout, options.engine
-    )
-    get_and_print_info(urls, user_agent, options)
+    try:
+        urls = get_search_urls(
+            keywords, user_agent, options.timeout, options.engine
+        )
+        get_and_print_info(urls, user_agent, options)
+    except KeyboardInterrupt:
+        print 'Aborting.'
+        sys.exit(1)
 
 
 # Run cli function if invoked from shell
 if __name__ == '__main__':
-    try:
-        cli()
-    except KeyboardInterrupt:
-        print 'Aborting.'
-        sys.exit(1)
+    cli()
