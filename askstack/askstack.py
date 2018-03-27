@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-# askstack 0.1.2
+# askstack 0.1.3
 # author: Pedro Buteri Gonring
 # email: pedro@bigode.net
-# date: 20171223
+# date: 20180327
 
 import sys
 import random
@@ -15,7 +15,7 @@ import requests
 from lxml import html
 
 
-version = '0.1.2'
+version = '0.1.3'
 
 
 # Parse and validate arguments
@@ -197,8 +197,8 @@ def get_question_title(raw_html):
 # Get the first code snippet on the html
 def get_code_snippet(raw_html):
     tree = html.fromstring(raw_html)
-    snippets = tree.xpath('//td[@class="answercell"]//div[@class="post-text"]'
-                          '//pre//code//text()')
+    snippets = tree.xpath('//div[starts-with(@class,"answercell")]'
+                          '//div[@class="post-text"]//pre//code//text()')
     if not snippets:
         return 'No code snippet found on page :(\n'
     return snippets[0]
@@ -207,7 +207,8 @@ def get_code_snippet(raw_html):
 # Get the first full answer on the html
 def get_full_answer(raw_html):
     tree = html.fromstring(raw_html)
-    answers = tree.xpath('//td[@class="answercell"]//div[@class="post-text"]')
+    answers = tree.xpath('//div[starts-with(@class,"answercell")]'
+                         '//div[@class="post-text"]')
     if not answers:
         return 'No answers found on page :(\n'
     return answers[0].text_content()
