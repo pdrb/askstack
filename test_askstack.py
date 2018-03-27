@@ -106,7 +106,7 @@ def test_get_question_title():
 
 
 def test_get_code_snippet():
-    raw_html = '''<td class="answercell">
+    raw_html = '''<div class="answercell post-layout--right">
     <div class="post-text" itemprop="text">
 <p>Testing</p>
 
@@ -118,7 +118,7 @@ def test_get_code_snippet():
 
 
 def test_get_full_answer():
-    raw_html = '''<td class="answercell">
+    raw_html = '''<div class="answercell post-layout--right">
     <div class="post-text" itemprop="text">
 <p>Testing</p>
 
