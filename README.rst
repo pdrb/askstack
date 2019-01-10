@@ -1,11 +1,10 @@
+|Downloads|
+
 askstack
 ========
 
 Search answers on Stack Overflow. Can use Google, Bing or DuckDuckGo search
 engine.
-
-About
------
 
 Just pass some keywords to the script and it will uses a search engine to find
 the most relevant pages on Stack Overflow.
@@ -13,9 +12,7 @@ the most relevant pages on Stack Overflow.
 Then, it will get the first code snippet from the question page or the full
 answer text.
 
-Simple example:
-
-::
+Simple example::
 
     $ askstack python delete dict key
     ---------------------------------------------------------------------------
@@ -39,18 +36,22 @@ Simple example:
     ---------------------------------------------------------------------------
 
 
+Notes
+=====
+
+- Works on Python 2.7 and Python 3.4+
+
+
 Install
--------
+=======
 
-Install using pip:
-
-::
+Install using pip::
 
     pip install askstack
 
 
 Usage
------
+=====
 
 ::
 
@@ -71,29 +72,19 @@ Usage
 
 
 Examples
---------
+========
 
-If you are feeling lucky, get only the first code snippet:
-
-::
+If you are feeling lucky, get only the first code snippet::
 
     $ askstack linux gzip directory -a 1
 
-Get full first answer:
-
-::
+Get full first answer::
 
     $ askstack linux gzip directory -a 1 -f
 
-Try to get three answers using only DuckDuckGo as the search engine:
-
-::
+Try to get three answers using only DuckDuckGo as the search engine::
 
     $ askstack linux gzip directory -a 3 -e duckduckgo
 
 
-Notes
------
-
-- Works on Python 2.7
-- Tested on Linux and Windows, but should work on all platforms
+.. |Downloads| image:: https://pepy.tech/badge/askstack

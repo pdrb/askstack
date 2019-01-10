@@ -1,21 +1,24 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
-# askstack 0.1.3
+# askstack 0.1.4
 # author: Pedro Buteri Gonring
 # email: pedro@bigode.net
-# date: 20180327
+# date: 2019-01-10
 
 import sys
 import random
 import optparse
 import time
-import urllib2
 
 import requests
 from lxml import html
 
+if sys.version_info[0:2] <= (2, 7):
+    from urllib2 import unquote
+else:
+    from urllib.parse import unquote
 
-version = '0.1.3'
+version = '0.1.4'
 
 
 # Parse and validate arguments
@@ -158,14 +161,14 @@ def search_fallback(keywords, user_agent, timeout):
     if type(urls) is list:
         return urls
     # Print the error and try Bing
-    print urls
-    print '\nTrying Bing...'
+    print(urls)
+    print('\nTrying Bing...')
     urls = search_bing(keywords, user_agent, timeout)
     if type(urls) is list:
         return urls
     # Print the error and try DuckDuckGo
-    print urls
-    print '\nTrying DuckDuckGo...'
+    print(urls)
+    print('\nTrying DuckDuckGo...')
     urls = search_duckduckgo(keywords, user_agent, timeout)
     if type(urls) is list:
         return urls
@@ -228,7 +231,7 @@ def get_question_id(url):
 
 # Convert %3A, %2F, etc... to string and do some fixing on malformed urls
 def fix_url(url):
-    url = urllib2.unquote(url)
+    url = unquote(url)
     try:
         # Dirty fix for some duckduckgo responses
         if 'http' not in url[:4]:
@@ -258,55 +261,59 @@ def get_search_urls(keywords, user_agent, timeout, engine):
     if engine == 'fallback':
         urls = search_fallback(keywords, user_agent, timeout)
         if type(urls) is not list:
-            print urls
-            print '\nCould not found any results.'
+            print(urls)
+            print('\nCould not find any results.')
             sys.exit(1)
     elif engine == 'google':
         urls = search_google(keywords, user_agent, timeout)
         if type(urls) is not list:
-            print urls
+            print(urls)
             sys.exit(1)
     elif engine == 'bing':
         urls = search_bing(keywords, user_agent, timeout)
         if type(urls) is not list:
-            print urls
+            print(urls)
             sys.exit(1)
     elif engine == 'duckduckgo':
         urls = search_duckduckgo(keywords, user_agent, timeout)
         if type(urls) is not list:
-            print urls
+            print(urls)
             sys.exit(1)
     return urls
 
 
 # Get and print the answers
 def get_and_print_info(urls, user_agent, options):
-    print '-' * 79
+    print('-' * 79)
     for url in urls[:options.answers]:
         url = fix_url(url)
         if options.fulltext:
             page = get_stack_html(url, user_agent, options.timeout)
             # If an error is found, print it and go to the next iteration
             if 'Error:' in page[:len('Error:')]:
-                print '\n%s' % page
-                print '-' * 79
+                print('\n%s' % page)
+                print('-' * 79)
                 continue
             question_title = get_question_title(page)
             answer = get_full_answer(page)
         else:
             page = get_stack_html(url, user_agent, options.timeout)
             if 'Error:' in page[:len('Error:')]:
-                print '\n%s' % page
-                print '-' * 79
+                print('\n%s' % page)
+                print('-' * 79)
                 continue
             question_title = get_question_title(page)
             answer = get_code_snippet(page)
 
-        # Set encoding fix pipe '|' redirects for non ascii text
-        print '\nQuestion: %s' % question_title.encode('utf-8')
-        print '\n%s' % answer.encode('utf-8')
-        print '\nAnswer from: %s\n' % url
-        print '-' * 79
+        if sys.version_info[0:2] <= (2, 7):
+            # Set encoding fix pipe '|' redirects for non ascii text
+            print('\nQuestion: %s' % question_title.encode('utf-8'))
+            print('\n%s' % answer.encode('utf-8'))
+        else:
+            print('\nQuestion: %s' % question_title)
+            print('\n%s' % answer)
+        print('\nAnswer from: %s\n' % url)
+        print('-' * 79)
         # Sleep between requests
         time.sleep(options.sleep)
 
@@ -325,7 +332,7 @@ def cli():
         )
         get_and_print_info(urls, user_agent, options)
     except KeyboardInterrupt:
-        print 'Aborting.'
+        print('Aborting.')
         sys.exit(1)
 
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 from askstack import askstack
 import responses
@@ -20,7 +20,7 @@ def test_get_http_response():
     resp = askstack.get_http_response(
         'http://testing.testing', 'testing', 5, 'Test'
     )
-    assert resp.content == '<html><h1>OK</h1></html>'
+    assert resp.content.decode() == '<html><h1>OK</h1></html>'
 
 
 @responses.activate
