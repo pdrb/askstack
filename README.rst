@@ -1,4 +1,4 @@
-|Downloads|
+|Black| |Downloads|
 
 askstack
 ========
@@ -87,4 +87,8 @@ Try to get three answers using only DuckDuckGo as the search engine::
     $ askstack linux gzip directory -a 3 -e duckduckgo
 
 
+.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
 .. |Downloads| image:: https://pepy.tech/badge/askstack
+    :target: https://pepy.tech/project/askstack
